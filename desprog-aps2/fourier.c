@@ -1,5 +1,4 @@
 #include <math.h>
-#include <stdio.h>
 #include "fourier.h"
 
 void nft(double complex s[MAX_SIZE], double complex t[MAX_SIZE], int n, int sign)
