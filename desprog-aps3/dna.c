@@ -22,6 +22,11 @@ int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE +
 {
   int x = 0;
   int y = 0;
+
+  if (length[n][m] != -1)
+  {
+    return length[n][m];
+  }
   if (n == 0 || m == 0)
   {
     length[n][m] = 0;
@@ -56,7 +61,6 @@ int mlcs(char a[], int n, char b[], int m)
       length[i][j] = -1;
     }
   }
-
   return mlcs_w(a, n, b, m, length);
 }
 
