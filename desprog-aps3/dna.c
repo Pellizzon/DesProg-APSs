@@ -20,35 +20,27 @@ void load_string(FILE *file, int *p, char *s, int t)
 
 int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE + 1])
 {
-  int x = 0;
-  int y = 0;
-
-  if (length[n][m] != -1)
-  {
-    return length[n][m];
-  }
   if (n == 0 || m == 0)
   {
-    length[n][m] = 0;
+    return 0;
   }
-  else if (a[n - 1] == b[m - 1])
+  if (length[n - 1][m - 1] != -1)
   {
-    length[n][m] = mlcs_w(a, n - 1, b, m - 1, length) + 1;
+    return length[n - 1][m - 1];
+  }
+  if (a[n - 1] == b[m - 1])
+  {
+    length[n - 1][m - 1] = mlcs_w(a, n - 1, b, m - 1, length) + 1;
+    return length[n - 1][m - 1];
   }
   else
   {
-    x = mlcs_w(a, n - 1, b, m, length);
-    y = mlcs_w(a, n, b, m - 1, length);
-    if (x > y)
-    {
-      length[n][m] = x;
-    }
-    else
-    {
-      length[n][m] = y;
-    }
+    int x = mlcs_w(a, n - 1, b, m, length);
+    int y = mlcs_w(a, n, b, m - 1, length);
+
+    length[n - 1][m - 1] = (x > y) ? x : y;
+    return length[n - 1][m - 1];
   }
-  return length[n][m];
 }
 
 int mlcs(char a[], int n, char b[], int m)
