@@ -22,33 +22,34 @@ int mlcs_w(char a[], int n, char b[], int m, int length[MAX_SIZE + 1][MAX_SIZE +
 {
   if (n == 0 || m == 0)
   {
+    length[n][m] = 0;
     return 0;
   }
-  if (length[n - 1][m - 1] != -1)
+  if (length[n][m] != -1)
   {
-    return length[n - 1][m - 1];
+    return length[n][m];
   }
   if (a[n - 1] == b[m - 1])
   {
-    length[n - 1][m - 1] = mlcs_w(a, n - 1, b, m - 1, length) + 1;
-    return length[n - 1][m - 1];
+    length[n][m] = mlcs_w(a, n - 1, b, m - 1, length) + 1;
+    return length[n][m];
   }
   else
   {
     int x = mlcs_w(a, n - 1, b, m, length);
     int y = mlcs_w(a, n, b, m - 1, length);
 
-    length[n - 1][m - 1] = (x > y) ? x : y;
-    return length[n - 1][m - 1];
+    length[n][m] = (x > y) ? x : y;
+    return length[n][m];
   }
 }
 
 int mlcs(char a[], int n, char b[], int m)
 {
   int length[MAX_SIZE + 1][MAX_SIZE + 1];
-  for (int i = 0; i < MAX_SIZE + 1; i++)
+  for (int i = 0; i < n + 1; i++)
   {
-    for (int j = 0; j < MAX_SIZE + 1; j++)
+    for (int j = 0; j < m + 1; j++)
     {
       length[i][j] = -1;
     }
@@ -58,24 +59,20 @@ int mlcs(char a[], int n, char b[], int m)
 
 int dlcs(char a[], int n, char b[], int m)
 {
-  int length[MAX_SIZE + 1][MAX_SIZE + 1];
-  for (int i = 0; i < MAX_SIZE + 1; i++)
+  int length[n + 1][m + 1];
+  for (int i = 0; i < n + 1; i++)
   {
-    for (int j = 0; j < MAX_SIZE + 1; j++)
-    {
-      length[i][j] = 0;
-    }
+    length[i][0] = 0;
+  }
+  for (int j = 1; j < m + 1; j++)
+  {
+    length[0][j] = 0;
   }
 
   for (int i = 0; i < n; i++)
   {
     for (int j = 0; j < m; j++)
     {
-      if (i == 0 || j == 0)
-      {
-        length[i][j] = 0;
-      }
-
       if (a[i] == b[j])
       {
         length[i + 1][j + 1] = length[i][j] + 1;
